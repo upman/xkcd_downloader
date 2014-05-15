@@ -1,17 +1,30 @@
+#!/usr/bin/ruby
+require 'mechanize'
+
+$agent = Mechanize.new
+$pwd = Dir.pwd
 
 
-Gem::Specification.new do |s|
-  s.name        = 'xkcd_downloader'
-  s.version     = '0.1.0'
-  s.date        = '2014-04-15'
-  s.summary     = "Download xkcd comics"
-  s.description = "A simple xkcd comic downloading gem see [blog post] for more info."
-  s.authors     = ["Ravi Kumar"]
-  s.email       = 'upman116@gmail.com'
-  s.files       = ["lib/xkcd_downloader.rb"]
-  s.homepage    = 
-    'http://rubygems.org/gems/xkcd_downloader'
-  s.license       = 'MIT'
-  s.add_runtime_dependency "mechanize",
-    [">=2.7.3"]
+
+def get_xkcd(number, caption = false, location = nil,name = nil)
+
+	page = $agent.get("http://xkcd.com/#{number}/")
+	comic = page.image_with(:src => /\/comics\//)
+	last_dot = comic.src.rindex('.')
+	extension = comic.src[last_dot..-1]
+	if location.nil?
+		location = $pwd
+	end
+
+	if name.nil? 
+		name = "\##{number} - "+comic.alt
+	end
+
+	path_to_file = location+'/'+name
+	comic.fetch.save path_to_file + extension
+	if caption
+		File.open(path_to_file + " - caption",'w') do |f|
+			f.write comic.title
+		end
+	end
 end
