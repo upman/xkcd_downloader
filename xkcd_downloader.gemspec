@@ -12,4 +12,6 @@ Gem::Specification.new do |s|
   s.homepage    = 
     'http://rubygems.org/gems/xkcd_downloader'
   s.license       = 'MIT'
+  s.add_runtime_dependency "mechanize",
+    [">=2.7.3"]
 end
