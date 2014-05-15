@@ -1,6 +1,8 @@
+
+
 Gem::Specification.new do |s|
   s.name        = 'xkcd_downloader'
-  s.version     = '0.'
+  s.version     = '0.1.0'
   s.date        = '2014-04-15'
   s.summary     = "Download xkcd comics"
   s.description = "A simple xkcd comic downloading gem see [blog post] for more info."
